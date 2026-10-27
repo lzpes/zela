@@ -1,69 +1,89 @@
-# Sistema de Gestão e Operações Aéreas
+# Zela
 
-Plataforma para centralizar, automatizar e otimizar os processos críticos de companhias aéreas e centros de controle de operações (OCC): malha aérea, controle de frota, escalas de tripulação, acompanhamento de manutenção, despacho operacional e tratamento de disrupções.
+**Zelando pela sua cidade.**
 
-> Status: em fase de especificação (levantamento de requisitos e modelagem).
+Zela é um aplicativo de zeladoria urbana que conecta o cidadão à gestão pública. O morador registra problemas da cidade (buraco na rua, iluminação falhando, lixo em local inadequado) com foto e localização exata no mapa, e acompanha cada etapa até a resolução. Para a gestão pública, o Zela centraliza as ocorrências em um painel com indicadores, gráficos e mapas de calor.
 
-## Propósito
+Projeto desenvolvido no curso de Engenharia de Software do Centro Universitário UNICEPLAC, em parceria com a Stefanini Consultoria e Assessoria em Informática S.A.
 
-Ser a única fonte de verdade (Single Source of Truth) para operadores, despachantes, engenheiros de manutenção e tripulantes, reduzindo riscos operacionais, eliminando planilhas desconectadas, agilizando decisões em tempo real e garantindo conformidade com os regulamentos de segurança da aviação civil.
+## Problema
 
-## Objetivos
+Apontar um problema urbano hoje costuma ser um processo burocrático e fragmentado: as informações se perdem em vários canais, falta localização precisa e o cidadão não sabe se o pedido foi atendido. A gestão pública, por sua vez, perde a visão do todo e a capacidade de priorizar o que é mais urgente.
 
-Geral: projetar e especificar uma arquitetura de software robusta, segura e escalável para o gerenciamento de operações aéreas de grande porte.
+## Funcionalidades
 
-Específicos:
+**Cidadão**
+- Cadastro e autenticação (e-mail/CPF e senha, login social com Google e Facebook)
+- Registro de ocorrência com foto, categoria, descrição e localização via GPS
+- Acompanhamento do status: Registrada, Em Análise, Em Execução, Concluída
+- Mapa interativo com as ocorrências da região
+- Notificações push sobre mudanças de status
 
-- Automatizar o cálculo de combustível e o balanceamento de peso
-- Bloquear automaticamente aeronaves com itens de manutenção vencidos
-- Validar os limites legais de jornada de tripulantes
-- Integrar dados meteorológicos e NOTAM em tempo real
-- Prover trilhas de auditoria imutáveis para rastreabilidade regulatória
+**Gestor público**
+- Painel administrativo com indicadores e estatísticas
+- Mapas de calor para identificar áreas críticas
+- Gestão e atualização de status das ocorrências, com comentários
 
-## Módulos
+## Arquitetura
 
-| Código | Módulo |
-|--------|--------|
-| RF01 | Gerenciamento do ciclo de vida dos voos |
-| RF02 | Registro e status operacional da frota |
-| RF03 | Escalonamento de pilotos e comissários |
-| RF04 | Manutenção preventiva e corretiva (ordens de serviço e bloqueios) |
-| RF05 | Despacho operacional |
-| RF06 | Cálculo de combustível |
-| RF07 | Consulta meteorológica |
-| RF08 | Tratamento de disrupções |
-| RF09 | Alertas automáticos |
-| RF10 | Relatórios gerenciais de pontualidade (OTP) |
-| RF11 | Perfis e acessos (RBAC) |
+| Camada | Tecnologia |
+|---|---|
+| App mobile (Android e iOS) | React Native |
+| API / Back-end | Node.js + Express (REST, HTTPS/JSON) |
+| Banco de dados | PostgreSQL + PostGIS + pgcrypto |
+| Integrações | Google Maps API, Firebase Storage, Firebase Cloud Messaging |
 
-## Documentação
+### Modelo de dados (DER)
 
-- [Levantamento de requisitos](docs/requisitos.md)
-- [Regras de negócio](docs/regras-de-negocio.md)
+Entidades principais: Usuario, Endereco, Ocorrencia, CategoriaOcorrencia, StatusOcorrencia, HistoricoStatusOcorrencia, MidiaOcorrencia, Dispositivo, UsuarioDispositivo, Conta e Banco.
+
+O banco já conta com as tabelas `users`, `refresh_tokens` e `password_reset_tokens`, validações via CHECK (formato de e-mail e CPF), índices e trigger de auditoria (`updated_at`).
 
 ## Estrutura do repositório
 
 ```
-.
-├── README.md
-├── .gitignore
-├── docs/
-│   ├── requisitos.md
-│   ├── regras-de-negocio.md
-│   └── diagramas/        # casos de uso, classes, sequência, etc.
-└── src/                  # código-fonte (futuro)
+zela/
+├── mobile/      # app React Native
+├── backend/     # API Node.js + Express
+├── database/    # scripts SQL (schema, migrations, seeds)
+├── docs/        # BMC, diagramas (arquitetura e DER), carta de aceite, artigo
+└── README.md
 ```
 
-## Roadmap
+## Protótipo
 
-- [x] Visão geral e objetivos
+Telas de onboarding, login e cadastro no [Figma](https://www.figma.com/design/Wud45Gy2EvNUAm7SPRkKM1/TELA-LOGIN-E-CADASTRO-ZELA?node-id=237-3584&t=yBUGdc3M2hHpyE8q-0).
+
+## Metodologia
+
+Pesquisa aplicada, qualitativa e exploratória, com desenvolvimento iterativo e incremental inspirado em práticas ágeis, com entregas semanais validadas pelo professor orientador.
+
+Etapas: levantamento de requisitos, Business Model Canvas, modelagem técnica (arquitetura e DER), implementação do banco, prototipação da interface, validação institucional e acompanhamento contínuo.
+
+## Status
+
 - [x] Levantamento de requisitos
-- [ ] Diagrama de casos de uso
-- [ ] Diagrama de classes
-- [ ] Diagrama de sequência
-- [ ] Modelo de dados (DER)
-- [ ] Arquitetura da solução
-- [ ] Protótipo / implementação
+- [x] Business Model Canvas
+- [x] Diagrama de arquitetura e DER
+- [x] Script inicial do banco de dados
+- [x] Protótipo: onboarding, login e cadastro
+- [ ] API (autenticação e ocorrências)
+- [ ] App mobile
+- [ ] Painel administrativo
+- [ ] Testes de usabilidade
+
+## Como rodar
+
+Em breve, conforme os módulos forem sendo implementados.
+
+## Equipe
+
+Adriano Henrique Gurgel Batalha, Alexandre Alves de Carvalho, Guilherme Lopes Mendes, Lucas Felipe Pereira Amorim, Gabriel da Silva Coelho, Lucas de Moraes Petter, Êllyel Ferreira Alves e Kleber Anderson Betcel Lima.
+
+## Instituição e parceria
+
+- Centro Universitário UNICEPLAC, Engenharia de Software
+- Parceira/madrinha: Stefanini Consultoria e Assessoria em Informática S.A.
 
 ## Licença
 
