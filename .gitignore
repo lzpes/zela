@@ -1,0 +1,22 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editores / IDEs
+.vscode/
+.idea/
+
+# Dependências e builds (futuro)
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+dist/
+build/
+
+# Variáveis de ambiente e segredos
+.env
+.env.*
+
+# Logs
+*.log
