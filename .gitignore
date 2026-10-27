@@ -1,22 +1,28 @@
-# Sistema operacional
-.DS_Store
-Thumbs.db
-
-# Editores / IDEs
-.vscode/
-.idea/
-
-# Dependências e builds (futuro)
+# Dependencies
 node_modules/
-__pycache__/
-*.pyc
-.venv/
-dist/
-build/
 
-# Variáveis de ambiente e segredos
+# Env e segredos
 .env
 .env.*
+!.env.example
+*.pem
+google-services.json
+GoogleService-Info.plist
+serviceAccountKey.json
+
+# Builds
+dist/
+build/
+.expo/
+android/app/build/
+ios/Pods/
 
 # Logs
 *.log
+npm-debug.log*
+
+# SO / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
